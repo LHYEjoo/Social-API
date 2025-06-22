@@ -111,6 +111,8 @@
 
         .feed-container {
             padding: 30px;
+            max-height: 600px;
+            overflow-y: auto;
         }
 
         .post {
@@ -121,6 +123,18 @@
             margin-bottom: 25px;
             box-shadow: 0 5px 15px rgba(0,0,0,0.08);
             transition: transform 0.3s ease;
+            animation: slideInFromTop 0.5s ease-out;
+        }
+
+        @keyframes slideInFromTop {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .post:hover {
@@ -303,6 +317,33 @@
         .auto-refresh input[type="checkbox"] {
             margin-right: 10px;
         }
+
+        .feed-stats {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            text-align: center;
+            font-weight: 600;
+            color: #6c757d;
+        }
+
+        .new-post-indicator {
+            background: #28a745;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 20px;
+            margin-bottom: 20px;
+            text-align: center;
+            font-weight: 600;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.7; }
+            100% { opacity: 1; }
+        }
     </style>
 </head>
 <body>
@@ -336,8 +377,9 @@
     </div>
 
     <script>
-        let currentPost = null;
+        let feedPosts = [];
         let autoRefreshInterval = null;
+        let lastPostId = null;
 
         const API_BASE = 'http://localhost:3000';
 
@@ -379,18 +421,46 @@
         async function getFeed() {
             try {
                 const result = await makeRequest(`${API_BASE}/feed`);
-                currentPost = result.data;
-                displayPost(currentPost);
-                showStatus('Feed opgehaald!');
+                const newPost = result.data;
+                
+                // Check if this is a new post
+                if (lastPostId !== newPost.id) {
+                    // Add new post to the top of the feed
+                    feedPosts.unshift(newPost);
+                    lastPostId = newPost.id;
+                    
+                    // Show new post indicator
+                    showNewPostIndicator();
+                    
+                    // Update the display
+                    displayFeed();
+                    showStatus('Nieuwe post toegevoegd aan feed!');
+                } else {
+                    showStatus('Geen nieuwe posts beschikbaar');
+                }
             } catch (error) {
                 showStatus('Kon feed niet ophalen', 'error');
             }
         }
 
+        function showNewPostIndicator() {
+            const indicator = document.createElement('div');
+            indicator.className = 'new-post-indicator';
+            indicator.textContent = '🆕 Nieuwe post toegevoegd!';
+            
+            const container = document.getElementById('feedContainer');
+            container.insertBefore(indicator, container.firstChild);
+            
+            setTimeout(() => {
+                indicator.remove();
+            }, 3000);
+        }
+
         async function getAllPosts() {
             try {
                 const result = await makeRequest(`${API_BASE}/posts`);
-                displayAllPosts(result.data);
+                feedPosts = result.data;
+                displayFeed();
                 showStatus(`${result.data.length} posts geladen!`);
             } catch (error) {
                 showStatus('Kon posts niet ophalen', 'error');
@@ -407,11 +477,9 @@
         }
 
         function clearFeed() {
-            document.getElementById('feedContainer').innerHTML = `
-                <div class="loading">
-                    <p>Klik op "Get Feed" om posts te laden...</p>
-                </div>
-            `;
+            feedPosts = [];
+            lastPostId = null;
+            displayFeed();
             showStatus('Feed gewist!');
         }
 
@@ -422,10 +490,11 @@
                 });
                 showStatus(`Post geliked! Nieuwe likes: ${result.data.likes}`);
                 
-                // Update the current post if it's the one we liked
-                if (currentPost && currentPost.id === postId) {
-                    currentPost.likes = result.data.likes;
-                    updatePostDisplay(currentPost);
+                // Update the post in our feed
+                const postIndex = feedPosts.findIndex(p => p.id === postId);
+                if (postIndex !== -1) {
+                    feedPosts[postIndex].likes = result.data.likes;
+                    displayFeed();
                 }
             } catch (error) {
                 showStatus('Kon post niet liken', 'error');
@@ -440,21 +509,38 @@
                 });
                 showStatus('Comment toegevoegd!');
                 
-                // Update the current post if it's the one we commented on
-                if (currentPost && currentPost.id === postId) {
-                    currentPost.comments.push(result.data);
-                    updatePostDisplay(currentPost);
+                // Update the post in our feed
+                const postIndex = feedPosts.findIndex(p => p.id === postId);
+                if (postIndex !== -1) {
+                    feedPosts[postIndex].comments.push(result.data);
+                    displayFeed();
                 }
             } catch (error) {
                 showStatus('Kon comment niet toevoegen', 'error');
             }
         }
 
-        function displayPost(post) {
+        function displayFeed() {
             const container = document.getElementById('feedContainer');
             
-            const postHtml = `
-                <div class="post">
+            if (feedPosts.length === 0) {
+                container.innerHTML = `
+                    <div class="loading">
+                        <p>Klik op "Get Feed" om posts te laden...</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            // Add feed stats
+            const statsHtml = `
+                <div class="feed-stats">
+                    📊 Feed bevat ${feedPosts.length} posts
+                </div>
+            `;
+            
+            const postsHtml = feedPosts.map(post => `
+                <div class="post" data-post-id="${post.id}">
                     <div class="post-header">
                         <div class="post-author">${post.personage}</div>
                         <div class="post-type type-${post.type}">${post.type}</div>
@@ -514,50 +600,9 @@
                         </div>
                     </div>
                 </div>
-            `;
-            
-            container.innerHTML = postHtml;
-        }
-
-        function updatePostDisplay(post) {
-            if (document.querySelector('.post')) {
-                displayPost(post);
-            }
-        }
-
-        function displayAllPosts(posts) {
-            const container = document.getElementById('feedContainer');
-            
-            if (posts.length === 0) {
-                container.innerHTML = '<div class="loading"><p>Geen posts gevonden</p></div>';
-                return;
-            }
-            
-            const postsHtml = posts.map(post => `
-                <div class="post">
-                    <div class="post-header">
-                        <div class="post-author">${post.personage}</div>
-                        <div class="post-type type-${post.type}">${post.type}</div>
-                    </div>
-                    
-                    <div class="post-content">${post.content}</div>
-                    
-                    ${post.image ? `
-                        <div class="post-media">
-                            <img src="${post.image}" alt="Post image" onerror="this.style.display='none'">
-                        </div>
-                    ` : ''}
-                    
-                    <div class="post-stats">
-                        <span>❤️ ${post.likes} likes</span>
-                        <span>💬 ${post.comments.length} comments</span>
-                        <span>🕒 ${new Date(post.timestamp).toLocaleString('nl-NL')}</span>
-                        ${post.urgent ? '<span>🚨 URGENT</span>' : ''}
-                    </div>
-                </div>
             `).join('');
             
-            container.innerHTML = postsHtml;
+            container.innerHTML = statsHtml + postsHtml;
         }
 
         function toggleComments(postId) {
