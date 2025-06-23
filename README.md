@@ -1,172 +1,131 @@
 # Social Media Feed API
 
-Een Node.js + Express API voor een social media feed waarin gebruikers berichten kunnen zien, liken, en erop reageren.
+A Node.js + Express API for a social media feed where users can view, like, and comment on posts.
+
+---
 
 ## 🚀 Features
 
-- **Feed Systeem**: Elke 15 seconden een nieuwe post tonen via GET /feed
-- **Smart Algorithm**: Mix van posts van gevolgde gebruikers met trending, urgent en unpopular posts
-- **Like Functionaliteit**: Posts kunnen geliked worden
-- **Comment Systeem**: Gebruikers kunnen commentaar toevoegen
-- **In-Memory Data**: Makkelijk uit te breiden naar MongoDB
-- **Dummy Data**: Handmatig geschreven posts in `data/posts.js`
+- **Feed System:** Shows a new post every 15 seconds via `GET /feed`
+- **Smart Algorithm:** Mixes posts from followed users with trending, urgent, and unpopular posts
+- **Like Functionality:** Users can like posts
+- **Comment System:** Users can add comments to posts
+- **In-Memory Data:** Easy to extend to MongoDB
+- **Dummy Data:** Handwritten posts in `data/posts.js`
 
-## 📋 Post Structuur
+---
 
-Elke post bevat:
-- `id`: Unieke identifier
-- `personage`: Naam van de poster
-- `content`: Tekst van de post
-- `image`: URL naar afbeelding (optioneel)
-- `video`: URL naar video (optioneel)
-- `likes`: Aantal likes
-- `comments`: Array van commentaren
-- `urgent`: Boolean voor urgente posts
-- `timestamp`: Tijdstip van posten
-- `type`: "normal", "trending", of "unpopular"
+## 📦 Project Structure
 
-## 🛠️ Installatie
+```
+Social-API/
+├── server.js          # Main server with all endpoints
+├── data/
+│   └── posts.js       # Dummy data (easy to edit)
+├── package.json       # Dependencies and scripts
+└── README.md          # This documentation
+```
+
+---
+
+## 📖 Table of Contents
+
+- [Features](#-features)
+- [Project Structure](#-project-structure)
+- [Installation](#-installation)
+- [Usage](#-usage)
+- [API Endpoints](#-api-endpoints)
+- [Feed Algorithm](#-feed-algorithm)
+- [Customizing Dummy Data](#-customizing-dummy-data)
+- [Contributing](#-contributing)
+- [License](#-license)
+- [FAQ / Troubleshooting](#faq--troubleshooting)
+- [Changelog](#changelog)
+
+---
+
+## 🛠️ Installation
 
 ```bash
-# Dependencies installeren
+# Install dependencies
 npm install
 
-# Server starten
+# Start the server
 npm start
 
-# Of voor development (met nodemon)
+# For development (with nodemon)
 npm run dev
 ```
 
+---
+
+## 🚦 Usage
+
+After starting the server, the API will be available at your configured port (default: 3000).
+
+You can also use the included `index.html` as a test client, or connect your own frontend.
+
+---
+
 ## 📡 API Endpoints
 
-### GET /feed
-Retourneert één post per keer (gebaseerd op algoritme)
+### `GET /feed`
+Returns one post at a time (based on the algorithm).
 
+### `POST /like/:postId`
+Increase the number of likes for a post.
+
+### `POST /comment/:postId`
+Add a comment to a post.
+
+### `GET /posts`
+Returns all posts (for debugging).
+
+### `GET /posts/:id`
+Returns a specific post.
+
+### `GET /health`
+Health check endpoint.
+
+**Example usage:**
 ```bash
-curl http://localhost:3000/feed
+curl https://social-api-sm1s.onrender.com/feed
+curl -X POST https://social-api-sm1s.onrender.com/like/1
+curl -X POST https://social-api-sm1s.onrender.com/comment/1 -H "Content-Type: application/json" -d '{"user": "John Doe", "text": "Great post!"}'
+curl https://social-api-sm1s.onrender.com/posts
+curl https://social-api-sm1s.onrender.com/posts/1
+curl https://social-api-sm1s.onrender.com/health
 ```
 
-**Response:**
-```json
-{
-  "success": true,
-  "data": {
-    "id": 1,
-    "personage": "Alice Johnson",
-    "content": "Net een geweldige wandeling gemaakt in het park!",
-    "image": "https://picsum.photos/600/400?random=1",
-    "video": null,
-    "likes": 24,
-    "comments": [...],
-    "urgent": false,
-    "timestamp": "2024-01-15T09:45:00Z",
-    "type": "normal"
-  },
-  "message": "Post retrieved successfully"
-}
-```
+---
 
-### POST /like/:postId
-Verhoogt het aantal likes van een post
+## 🧠 Feed Algorithm
 
-```bash
-curl -X POST http://localhost:3000/like/1
-```
+- **Every 3rd post:** Trending post
+- **Every 5th post:** Urgent post
+- **Every 7th post:** Unpopular post
+- **Other posts:** From followed users
 
-**Response:**
-```json
-{
-  "success": true,
-  "data": {
-    "postId": 1,
-    "likes": 25
-  },
-  "message": "Post liked successfully"
-}
-```
-
-### POST /comment/:postId
-Voegt een comment toe aan een post
-
-```bash
-curl -X POST http://localhost:3000/comment/1 \
-  -H "Content-Type: application/json" \
-  -d '{"user": "John Doe", "text": "Geweldige post!"}'
-```
-
-**Response:**
-```json
-{
-  "success": true,
-  "data": {
-    "id": 1705312800000,
-    "user": "John Doe",
-    "text": "Geweldige post!",
-    "timestamp": "2024-01-15T18:00:00.000Z"
-  },
-  "message": "Comment added successfully"
-}
-```
-
-### GET /posts
-Retourneert alle posts (voor debugging)
-
-```bash
-curl http://localhost:3000/posts
-```
-
-### GET /posts/:id
-Retourneert een specifieke post
-
-```bash
-curl http://localhost:3000/posts/1
-```
-
-### GET /health
-Health check endpoint
-
-```bash
-curl http://localhost:3000/health
-```
-
-## 🧠 Feed Algoritme
-
-Het feed algoritme werkt als volgt:
-- **Elke 3e post**: Trending post
-- **Elke 5e post**: Urgente post
-- **Elke 7e post**: Unpopular post
-- **Overige posts**: Van gevolgde gebruikers
-
-Gevolgde gebruikers (demo):
+Followed users (demo):
 - Alice Johnson
 - Sarah Chen
 - Cooking Master
 - Book Lover
 - Fitness Enthusiast
 
-## 📁 Project Structuur
+---
 
-```
-Social-API/
-├── server.js          # Hoofdserver met alle endpoints
-├── data/
-│   └── posts.js       # Dummy data (makkelijk aan te passen)
-├── package.json       # Dependencies en scripts
-└── README.md          # Deze documentatie
-```
+## 📝 Customizing Dummy Data
 
-## 🔧 Aanpassen van Dummy Data
+You can easily edit the posts by modifying `data/posts.js`:
 
-Je kunt eenvoudig de posts aanpassen door het `data/posts.js` bestand te bewerken:
-
-```javascript
+```js
 const posts = [
   {
     id: 1,
-    personage: "Jouw Naam",
-    content: "Jouw bericht hier!",
-    image: "https://jouw-afbeelding-url.com",
+    personage: "Your Name",
+    content: "Your message here!",
+    image: "https://your-image-url.com",
     video: null,
     likes: 0,
     comments: [],
@@ -174,28 +133,33 @@ const posts = [
     timestamp: "2024-01-15T09:45:00Z",
     type: "normal"
   }
-  // Voeg meer posts toe...
+  // Add more posts...
 ];
 ```
 
-## 🗄️ MongoDB Integratie
+---
 
-De API is zo opgezet dat je later eenvoudig MongoDB kunt toevoegen:
+## 🤝 Contributing
 
-1. Installeer MongoDB driver: `npm install mongodb`
-2. Vervang de in-memory data met MongoDB queries
-3. De API structuur blijft hetzelfde
+Contributions are welcome! Please open an issue or submit a pull request.
 
-## 🚀 Deployment
-
-```bash
-# Production starten
-npm start
-
-# Of met environment variable voor port
-PORT=8080 npm start
-```
+---
 
 ## 📝 License
 
-ISC
+This project is licensed under the ISC License.
+
+---
+
+## ❓ FAQ / Troubleshooting
+
+- **Q:** I get a 404 for `/favicon.ico`  
+  **A:** This is normal if you haven't added a favicon. You can ignore this warning.
+
+- **Q:** The frontend tries to connect to `localhost:3000`  
+  **A:** Make sure you have updated the `API_BASE` in `index.html` to your deployed backend URL and hard-refresh your browser.
+
+- **Q:** How do I deploy this project?  
+  **A:** You can deploy the backend to Render, Vercel, or any Node.js hosting provider. The frontend (`index.html`) can be deployed to Vercel or Netlify as a static site.
+
+---
