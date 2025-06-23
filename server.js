@@ -21,6 +21,7 @@ const corsOptions = {
 app.use(cors(corsOptions));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use('/img', express.static('public/img'));
 
 // In-memory data storage (simulating database)
 let feedIndex = 0;
