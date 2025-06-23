@@ -5,38 +5,33 @@ const posts = require('./data/posts');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// CORS configuration - More permissive for deployment
-const corsOptions = {
-  origin: [
-    'https://social-api-peach.vercel.app',
-    'https://social-api-sm1s.onrender.com',
-    'http://localhost:3000',
-    'http://localhost:5500',
-    'http://127.0.0.1:5500',
-    'http://localhost:8080'
-  ],
-  credentials: true,
-  optionsSuccessStatus: 200,
+// Aggressive CORS configuration for deployment
+app.use((req, res, next) => {
+  // Allow all origins
+  res.header('Access-Control-Allow-Origin', '*');
+  
+  // Allow specific methods
+  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+  
+  // Allow specific headers
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
+  
+  // Handle preflight requests
+  if (req.method === 'OPTIONS') {
+    res.status(200).end();
+    return;
+  }
+  
+  next();
+});
+
+// Also use cors middleware as backup
+app.use(cors({
+  origin: true, // Allow all origins
+  credentials: false, // Disable credentials for now
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With']
-};
-
-// Middleware
-app.use(cors(corsOptions));
-
-// Additional CORS headers for all responses
-app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', 'https://social-api-peach.vercel.app');
-  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
-  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Requested-With');
-  res.header('Access-Control-Allow-Credentials', 'true');
-  
-  if (req.method === 'OPTIONS') {
-    res.sendStatus(200);
-  } else {
-    next();
-  }
-});
+}));
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
