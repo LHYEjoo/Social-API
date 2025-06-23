@@ -66,7 +66,7 @@ const posts = [
     ],
     urgent: false,
     timestamp: "2025-06-20T21:06:00Z",
-    type: "normal"
+    type: ""
   },
   {
     id: 4,
@@ -129,7 +129,7 @@ const posts = [
     ],
     urgent: false,
     timestamp: "2025-06-20T20:30:00Z",
-    type: "normal"
+    type: ""
   },
   {
     id: 7,
@@ -217,7 +217,7 @@ const posts = [
     ],
     urgent: false,
     timestamp: "2025-06-20T19:54:00Z",
-    type: "normal"
+    type: ""
   }
 ];
 

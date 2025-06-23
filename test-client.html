@@ -142,6 +142,11 @@
             box-shadow: 0 10px 25px rgba(0,0,0,0.15);
         }
 
+        .post.post-urgent {
+            background-color: #ffadad;
+            border-color: #f5c6cb;
+        }
+
         .post-header {
             display: flex;
             justify-content: space-between;
@@ -163,10 +168,9 @@
             text-transform: uppercase;
         }
 
-        .type-normal { background: #e9ecef; color: #6c757d; }
         .type-trending { background: #d4edda; color: #155724; }
         .type-unpopular { background: #f8d7da; color: #721c24; }
-        .type-urgent { background: #fff3cd; color: #856404; }
+        .type-urgent { background: #ffadad; color: #721c24; }
 
         .post-content {
             font-size: 1.1em;
@@ -540,10 +544,10 @@
             `;
             
             const postsHtml = feedPosts.map(post => `
-                <div class="post" data-post-id="${post.id}">
+                <div class="post ${post.type === 'urgent' ? 'post-urgent' : ''}" data-post-id="${post.id}">
                     <div class="post-header">
                         <div class="post-author">${post.personage}</div>
-                        <div class="post-type type-${post.type}">${post.type}</div>
+                        ${renderTag(post)}
                     </div>
                     
                     <div class="post-content">${post.content}</div>
@@ -567,7 +571,6 @@
                         <span>❤️ ${post.likes} likes</span>
                         <span>💬 ${post.comments.length} comments</span>
                         <span>🕒 ${new Date(post.timestamp).toLocaleString('nl-NL')}</span>
-                        ${post.urgent ? '<span>🚨 URGENT</span>' : ''}
                     </div>
                     
                     <div class="post-actions">
@@ -603,6 +606,14 @@
             `).join('');
             
             container.innerHTML = statsHtml + postsHtml;
+        }
+
+        function renderTag(post) {
+            const validTags = ['trending', 'unpopular', 'urgent'];
+            if (validTags.includes(post.type)) {
+                return `<div class="post-type type-${post.type}">${post.type}</div>`;
+            }
+            return '';
         }
 
         function toggleComments(postId) {
