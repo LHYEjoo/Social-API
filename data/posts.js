@@ -1,224 +1,154 @@
 const posts = [
   {
     id: 1,
-    personage: "Emily",
-    content: "Ze proberen onze stemmen weer te dempen. Maar we blijven schrijven. We blijven schreeuwen. 🖤",
-    image: "https://picsum.photos/600/400?random=101",
+    personage: "Alice Johnson",
+    content: "Net een geweldige wandeling gemaakt in het park! De natuur is echt prachtig vandaag. 🌳",
+    image: "https://picsum.photos/600/400?random=1",
     video: null,
-    likes: 86,
+    likes: 24,
     comments: [
-      {
-        id: 10,
-        user: "Rosa",
-        text: "Dankjewel voor het delen.",
-        timestamp: "2025-06-20T21:15:00Z"
-      },
-      {
-        id: 11,
-        user: "Kim",
-        text: "Heftig om te lezen.",
-        timestamp: "2025-06-20T21:10:00Z"
-      }
+      { id: 1, user: "Bob Smith", text: "Ziet er geweldig uit! Welk park was dit?", timestamp: "2024-01-15T10:30:00Z" },
+      { id: 2, user: "Carol Davis", text: "Ik ben daar ook geweest! Echt mooi weer vandaag.", timestamp: "2024-01-15T11:15:00Z" }
     ],
     urgent: false,
-    timestamp: "2025-06-20T21:30:00Z",
-    type: "trending"
+    timestamp: "2024-01-15T09:45:00Z",
+    type: "normal"
   },
   {
     id: 2,
-    personage: "Abraham",
-    content: "Vandaag was er weer controle. We bidden in stilte, met deuren dicht. God hoort ons alsnog.",
-    image: "https://picsum.photos/600/400?random=102",
-    video: null,
-    likes: 18,
+    personage: "TechNews Daily",
+    content: "BREAKING: Nieuwe AI technologie die de wereld gaat veranderen! Dit is een game-changer voor de industrie. 🤖",
+    image: null,
+    video: "https://sample-videos.com/zip/10/mp4/SampleVideo_1280x720_1mb.mp4",
+    likes: 156,
     comments: [
-      {
-        id: 20,
-        user: "Daan",
-        text: "Ik voel met je mee.",
-        timestamp: "2025-06-20T21:05:00Z"
-      }
+      { id: 3, user: "David Wilson", text: "Interessant! Wanneer komt dit beschikbaar?", timestamp: "2024-01-15T12:00:00Z" },
+      { id: 4, user: "Emma Brown", text: "Ik ben sceptisch, maar hoopvol.", timestamp: "2024-01-15T12:30:00Z" }
     ],
-    urgent: false,
-    timestamp: "2025-06-20T21:18:00Z",
-    type: "unpopular"
+    urgent: true,
+    timestamp: "2024-01-15T11:30:00Z",
+    type: "trending"
   },
   {
     id: 3,
-    personage: "Carlos",
-    content: "Ik heb papieren. Maar geen rust. Niemand zegt het, maar je hoort het aan hoe ze kijken.",
-    image: "https://picsum.photos/600/400?random=103",
+    personage: "Frank Miller",
+    content: "Mijn katten zijn de beste collega's die ik ooit heb gehad. Ze geven nooit commentaar op mijn code! 😸",
+    image: "https://picsum.photos/600/400?random=2",
     video: null,
-    likes: 33,
+    likes: 8,
     comments: [
-      {
-        id: 30,
-        user: "Jeroen",
-        text: "Waarom horen we dit nergens?",
-        timestamp: "2025-06-20T20:55:00Z"
-      },
-      {
-        id: 31,
-        user: "Sanne",
-        text: "Sterkte!",
-        timestamp: "2025-06-20T20:50:00Z"
-      }
+      { id: 5, user: "Grace Lee", text: "Haha, dat is waar! Mijn kat zit ook altijd naast me.", timestamp: "2024-01-15T13:15:00Z" }
     ],
     urgent: false,
-    timestamp: "2025-06-20T21:06:00Z",
-    type: ""
-  },
-  {
-    id: 4,
-    personage: "Barry",
-    content: "Morgen moet ik weer naar het loket. Iedere keer vertellen wie ik ben. Waarom ik besta. Ik ben moe.",
-    image: "https://picsum.photos/600/400?random=104",
-    video: null,
-    likes: 9,
-    comments: [
-      {
-        id: 40,
-        user: "Femke",
-        text: "Heftig om te lezen.",
-        timestamp: "2025-06-20T20:40:00Z"
-      }
-    ],
-    urgent: false,
-    timestamp: "2025-06-20T20:54:00Z",
+    timestamp: "2024-01-15T12:45:00Z",
     type: "unpopular"
   },
   {
-    id: 5,
-    personage: "Tyrone",
-    content: "Er hangt iets in de lucht vandaag. Iets dat zegt: blijf binnen. Vertrouw je gevoel.",
-    image: "https://picsum.photos/600/400?random=105",
+    id: 4,
+    personage: "Sarah Chen",
+    content: "Net mijn eerste marathon uitgelopen! 42.2 km in 3:45:30. Ik ben zo trots op mezelf! 🏃‍♀️",
+    image: "https://picsum.photos/600/400?random=3",
     video: null,
-    likes: 74,
+    likes: 89,
     comments: [
-      {
-        id: 50,
-        user: "Tom",
-        text: "Dankjewel voor het delen.",
-        timestamp: "2025-06-20T20:35:00Z"
-      },
-      {
-        id: 51,
-        user: "Kim",
-        text: "Ik wist dit niet eens...",
-        timestamp: "2025-06-20T20:30:00Z"
-      }
+      { id: 6, user: "Mike Johnson", text: "Gefeliciteerd! Dat is een geweldige tijd!", timestamp: "2024-01-15T14:00:00Z" },
+      { id: 7, user: "Lisa Wang", text: "Inspirerend! Ik wil volgend jaar ook meedoen.", timestamp: "2024-01-15T14:30:00Z" },
+      { id: 8, user: "Tom Davis", text: "Respect! Dat is echt een prestatie.", timestamp: "2024-01-15T15:00:00Z" }
+    ],
+    urgent: false,
+    timestamp: "2024-01-15T13:30:00Z",
+    type: "trending"
+  },
+  {
+    id: 5,
+    personage: "Local News",
+    content: "URGENT: Verkeersongeval op de A1 bij afslag 15. Vermijd deze route indien mogelijk. 🚨",
+    image: null,
+    video: null,
+    likes: 12,
+    comments: [
+      { id: 9, user: "John Doe", text: "Ik sta al 30 minuten stil. Hopelijk is iedereen oké.", timestamp: "2024-01-15T15:30:00Z" }
     ],
     urgent: true,
-    timestamp: "2025-06-20T20:42:00Z",
+    timestamp: "2024-01-15T15:15:00Z",
     type: "urgent"
   },
   {
     id: 6,
-    personage: "Sara",
-    content: "De grens is stil vandaag. Maar mijn hart bonkt als een klok in oorlog. Wat hoor ik niet?",
-    image: "https://picsum.photos/600/400?random=106",
+    personage: "Cooking Master",
+    content: "Vandaag een traditioneel recept uit mijn grootmoeder's kookboek gemaakt. Het smaakt precies zoals vroeger! 👩‍🍳",
+    image: "https://picsum.photos/600/400?random=4",
     video: null,
-    likes: 22,
+    likes: 45,
     comments: [
-      {
-        id: 60,
-        user: "Lars",
-        text: "Ik voel met je mee.",
-        timestamp: "2025-06-20T20:25:00Z"
-      }
+      { id: 10, user: "Maria Garcia", text: "Ziet er heerlijk uit! Kun je het recept delen?", timestamp: "2024-01-15T16:00:00Z" },
+      { id: 11, user: "Carlos Rodriguez", text: "Mijn oma heeft ook zulke recepten. Ze zijn goud waard!", timestamp: "2024-01-15T16:15:00Z" }
     ],
     urgent: false,
-    timestamp: "2025-06-20T20:30:00Z",
-    type: ""
+    timestamp: "2024-01-15T15:45:00Z",
+    type: "normal"
   },
   {
     id: 7,
-    personage: "Mike",
-    content: "Ze zeggen: 'je bedoelt het goed'. Maar zelfs goede bedoelingen kunnen muren bouwen.",
-    image: "https://picsum.photos/600/400?random=107",
-    video: null,
-    likes: 11,
+    personage: "Gaming Pro",
+    content: "Net een nieuwe speedrun record gezet in mijn favoriete spel! 2:34:12 - een verbetering van 3 minuten! 🎮",
+    image: null,
+    video: "https://sample-videos.com/zip/10/mp4/SampleVideo_1280x720_2mb.mp4",
+    likes: 67,
     comments: [
-      {
-        id: 70,
-        user: "Rosa",
-        text: "Dankjewel voor het delen.",
-        timestamp: "2025-06-20T20:15:00Z"
-      }
+      { id: 12, user: "Alex Turner", text: "Geweldig! Welk spel was dit?", timestamp: "2024-01-15T16:30:00Z" },
+      { id: 13, user: "Sam Wilson", text: "Ik probeer al maanden onder de 2:40 te komen. Respect!", timestamp: "2024-01-15T16:45:00Z" }
     ],
     urgent: false,
-    timestamp: "2025-06-20T20:18:00Z",
-    type: "unpopular"
+    timestamp: "2024-01-15T16:00:00Z",
+    type: "trending"
   },
   {
     id: 8,
-    personage: "Emily",
-    content: "Er zijn weer arrestaties. We zoeken wie er nog veilig is. Deze post kan straks verwijderd zijn.",
-    image: "https://picsum.photos/600/400?random=101",
+    personage: "Weather Alert",
+    content: "WAARSCHUWING: Zware storm verwacht vanavond tussen 20:00-23:00. Blijf binnen en vermijd onnodige reizen. ⚡",
+    image: null,
     video: null,
-    likes: 113,
+    likes: 34,
     comments: [
-      {
-        id: 80,
-        user: "Jeroen",
-        text: "Heftig om te lezen.",
-        timestamp: "2025-06-20T20:10:00Z"
-      },
-      {
-        id: 81,
-        user: "Tom",
-        text: "Waarom horen we dit nergens?",
-        timestamp: "2025-06-20T20:05:00Z"
-      }
+      { id: 14, user: "Peter Storm", text: "Ik heb al mijn tuinmeubelen binnen gehaald.", timestamp: "2024-01-15T17:00:00Z" },
+      { id: 15, user: "Anna Weather", text: "Bedankt voor de waarschuwing! Ik ga mijn ramen dichtdoen.", timestamp: "2024-01-15T17:15:00Z" }
     ],
     urgent: true,
-    timestamp: "2025-06-20T20:18:00Z",
+    timestamp: "2024-01-15T16:45:00Z",
     type: "urgent"
   },
   {
     id: 9,
-    personage: "Carlos",
-    content: "Een vrouw zonder papieren heeft mij vandaag eten gegeven. Ik was niet de vluchteling. Zij was de held.",
-    image: "https://picsum.photos/600/400?random=103",
+    personage: "Book Lover",
+    content: "Net 'De Schaduw van de Wind' uitgelezen. Wat een prachtig boek! Iemand nog aanraders voor vergelijkbare boeken? 📚",
+    image: "https://picsum.photos/600/400?random=5",
     video: null,
-    likes: 91,
+    likes: 23,
     comments: [
-      {
-        id: 90,
-        user: "Sanne",
-        text: "Ik wist dit niet eens...",
-        timestamp: "2025-06-20T20:00:00Z"
-      }
+      { id: 16, user: "Emma Reader", text: "Probeer 'Het Kerkhof der Vergeten Boeken' van dezelfde auteur!", timestamp: "2024-01-15T17:30:00Z" },
+      { id: 17, user: "Mark Bookworm", text: "Ik vond 'De Naam van de Roos' ook geweldig.", timestamp: "2024-01-15T17:45:00Z" }
     ],
     urgent: false,
-    timestamp: "2025-06-20T20:06:00Z",
-    type: "trending"
+    timestamp: "2024-01-15T17:00:00Z",
+    type: "normal"
   },
   {
     id: 10,
-    personage: "Abraham",
-    content: "Soms droom ik dat ik zing. In het openbaar. Zonder angst. Zomaar, als mens.",
-    image: "https://picsum.photos/600/400?random=102",
+    personage: "Fitness Enthusiast",
+    content: "Dag 30 van mijn fitness challenge! Ik voel me sterker dan ooit. Wie doet er mee voor de volgende 30 dagen? 💪",
+    image: "https://picsum.photos/600/400?random=6",
     video: null,
-    likes: 39,
+    likes: 78,
     comments: [
-      {
-        id: 100,
-        user: "Lars",
-        text: "Ik voel met je mee.",
-        timestamp: "2025-06-20T19:45:00Z"
-      },
-      {
-        id: 101,
-        user: "Femke",
-        text: "Sterkte!",
-        timestamp: "2025-06-20T19:40:00Z"
-      }
+      { id: 18, user: "Jake Strong", text: "Ik ben erbij! Wat is je routine?", timestamp: "2024-01-15T18:00:00Z" },
+      { id: 19, user: "Sophie Fit", text: "Geweldig! Ik ben op dag 15 van mijn eigen challenge.", timestamp: "2024-01-15T18:15:00Z" },
+      { id: 20, user: "Chris Trainer", text: "Keep it up! Consistency is key.", timestamp: "2024-01-15T18:30:00Z" }
     ],
     urgent: false,
-    timestamp: "2025-06-20T19:54:00Z",
-    type: ""
+    timestamp: "2024-01-15T17:45:00Z",
+    type: "trending"
   }
 ];
 
-module.exports = posts;
+module.exports = posts; 
