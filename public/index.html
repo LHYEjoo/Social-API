@@ -555,7 +555,7 @@
                     
                     ${post.image ? `
                         <div class="post-media">
-                            <img src="${post.image}" alt="Post image" onerror="this.style.display='none'">
+                            <img src="${API_BASE}${post.image}" alt="Post image" onerror="this.style.display='none'">
                         </div>
                     ` : ''}
                     
