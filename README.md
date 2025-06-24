@@ -1,7 +1,9 @@
+[![NodeJS](https://img.shields.io/badge/Node.js-6DA55F?logo=node.js&logoColor=white)](#)[![Express.js](https://img.shields.io/badge/Express.js-%23404d59.svg?logo=express&logoColor=%2361DAFB)](#) [![ChatGPT](https://img.shields.io/badge/ChatGPT-74aa9c?logo=openai&logoColor=white)](#)[![Cursor](https://custom-icon-badges.demolab.com/badge/Cursor-000000?logo=cursor-ai-white)](#)
+
 # Social Media Feed API
 
 A Node.js + Express social media feed API that provides a curated feed experience with posts, likes, and comments functionality. The API serves one post at a time, intelligently mixing content from followed users with trending, urgent, and unpopular posts.
-![overview](Readmeimg/FAB_1.png)![overview](Readmeimg/KAD_1.png)
+![overview](Readmeimg/FAB_1.png)![overview](Readmeimg/KAD_2.png)
 ## Features
 
 - **Smart Feed Algorithm**: Mixes posts from followed users with trending, urgent, and unpopular content
@@ -15,8 +17,8 @@ A Node.js + Express social media feed API that provides a curated feed experienc
 
 ### Prerequisites
 
-- Node.js (v14 or higher)
-- npm or yarn
+- Node.js (v14 or higher)  [![NodeJS](https://img.shields.io/badge/Node.js-6DA55F?logo=node.js&logoColor=white)](#)
+- npm or yarn [![npm](https://img.shields.io/badge/npm-CB3837?logo=npm&logoColor=fff)](#) [![Yarn](https://img.shields.io/badge/Yarn-2C8EBB?logo=yarn&logoColor=fff)](#)
 
 ### Installation
 
