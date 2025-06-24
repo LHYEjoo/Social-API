@@ -1,7 +1,7 @@
 # Social Media Feed API
 
 A Node.js + Express social media feed API that provides a curated feed experience with posts, likes, and comments functionality. The API serves one post at a time, intelligently mixing content from followed users with trending, urgent, and unpopular posts.
-
+![overview](Readmeimg/FAB_1.png)![overview](Readmeimg/KAD_1.png)
 ## Features
 
 - **Smart Feed Algorithm**: Mixes posts from followed users with trending, urgent, and unpopular content
